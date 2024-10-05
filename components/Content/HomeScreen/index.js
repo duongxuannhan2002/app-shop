@@ -5,6 +5,7 @@ export default function HomeScreen(){
         <View>
             <Text>Đây là HomeScreen
                 có con cá con
+                con cănc
             </Text>
         </View>
     )
