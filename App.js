@@ -3,13 +3,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import Content from './components/Content/Router';
 import LoginForm from './components/Login/Login';
 import SignupPage from './components/Signup/SignUp';
+import Router from './components/router/Router';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-        <SignupPage></SignupPage>
-        {/* <LoginForm></LoginForm> */}
-    </View>
+    <Router></Router>
   );
 }
 

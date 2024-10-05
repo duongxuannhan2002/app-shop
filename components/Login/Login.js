@@ -3,7 +3,7 @@ import { View, TextInput, Button, Text, Alert, ImageBackground } from 'react-nat
 import styles from './LoginStyles'; // Nhập styles từ file CSS
 
 const backgroundImage = require('../../assets/image/abc.png'); // Đường dẫn đến ảnh
-const LoginForm = () => {
+const LoginForm = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,24 +19,28 @@ const LoginForm = () => {
   return (
     <ImageBackground source={backgroundImage} style={styles.background}>
       <View style={styles.container}>
-      <Text style={styles.title}>Đăng Nhập</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Tên người dùng"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Mật khẩu"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-      <Button title="Đăng Nhập" onPress={handleLogin} />
-    </View>
+        <Text style={styles.title}>Đăng Nhập</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Username"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
+        <Button title="Đăng Nhập" onPress={handleLogin} />
+        <Text style={styles.textSignUp} onPress={() => navigation.navigate('SIGNUP_PATH')}>
+          Bạn chưa có tài khoản ?
+          </Text>
+
+      </View>
     </ImageBackground>
-    
+
   );
 };
 

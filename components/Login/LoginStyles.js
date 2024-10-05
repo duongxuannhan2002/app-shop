@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions  } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window'); // Lấy chiều rộng và chiều cao của màn hình
 
 styles = StyleSheet.create({
@@ -10,8 +10,7 @@ styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    
-    width: width,   
+    width: width,
     height: height,
     justifyContent: 'center',
     padding: 16,
@@ -27,6 +26,13 @@ styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  textSignUp: {
+    textAlign: 'right',
+    fontSize: 16,
+    color: '#fff',
+    paddingTop: 5,
+    textDecorationLine: 'underline'
   },
 });
 
