@@ -35,10 +35,12 @@ const CartScreen = () => {
     return (
       <View style={styles.productContainer}>
         <TouchableOpacity style={styles.productItem} onPress={() => toggleProduct(item)}>
+          
           <Image source={item.image} style={styles.productImage} />
           <Text style={styles.productName}>{item.name}</Text>
           <Text style={styles.productPrice}>${item.price}</Text>
-          <Icon name={isSelected ? 'checkbox' : 'square-outline'} size={24} />
+        <Icon name={isSelected ? 'checkbox' : 'square-outline'} size={24} />
+          
         </TouchableOpacity>
         <TouchableOpacity style={styles.removeIcon} onPress={() => removeProduct(item.id)}>
           <Icon name="trash-outline" size={24} color="red" />
@@ -79,18 +81,14 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     borderRadius: 5,
   },
-  productItem: {
-    flexDirection: 'row',
-    alignItems: 'center'
-
-  },
+  
   productImage: {
     width: 50,
     height: 50,
     marginRight: 10,
   },
   productName: {
-    flex: 1,
+    width: '58%'
   },
   productPrice: {
     marginRight: 10,
@@ -118,9 +116,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   removeIcon: {
-    width :'100%',
-    flex: 1
-  }
+    width :'100px',
+    //  flex: 1
+  },
+  productItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '300px'
+    // flex :2
+
+  },
 });
 
 export default CartScreen;
