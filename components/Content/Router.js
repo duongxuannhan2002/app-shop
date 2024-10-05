@@ -1,4 +1,4 @@
-import HomeScreen from "./HomeScreen/HomeScreen"
+
 import { HOME_SCREEN, PRODUCT_SCREEN, CART_SCREEN } from "../contants/routers"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -6,13 +6,14 @@ import { View, Text, StyleSheet } from "react-native";
 import FormHeader from "./Header";
 import CartScreen from "./CartScreen";
 import ProductScreen from "./ProductScreen";
+import HomeScreen from "./HomeScreen/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 
 export default function Content() {
     return (
         <>
-            <NavigationContainer>
+            
                 <View style={{ flex: 1 }}>
                     <FormHeader />
                     {/* <Text>COn cac</Text> */}
@@ -25,7 +26,7 @@ export default function Content() {
 
                     </Stack.Navigator>
                 </View>
-            </NavigationContainer>
+            
         </>
     )
 }
