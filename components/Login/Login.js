@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, Alert } from 'react-native';
+import { View, TextInput, Button, Text, Alert, ImageBackground } from 'react-native';
 import styles from './LoginStyles'; // Nhập styles từ file CSS
 
+const backgroundImage = require('../../assets/image/abc.png'); // Đường dẫn đến ảnh
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -16,7 +17,8 @@ const LoginForm = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ImageBackground source={backgroundImage} style={styles.background}>
+      <View style={styles.container}>
       <Text style={styles.title}>Đăng Nhập</Text>
       <TextInput
         style={styles.input}
@@ -33,6 +35,8 @@ const LoginForm = () => {
       />
       <Button title="Đăng Nhập" onPress={handleLogin} />
     </View>
+    </ImageBackground>
+    
   );
 };
 

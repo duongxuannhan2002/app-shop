@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Content from './components/Content/Router';
-import Login from './components/router/Router';
+import LoginForm from './components/Login/Login';
+import SignupPage from './components/Signup/SignUp';
 
 export default function App() {
   return (
     <View style={styles.container}>
-        <Login></Login>
+        <SignupPage></SignupPage>
+        {/* <LoginForm></LoginForm> */}
     </View>
   );
 }
