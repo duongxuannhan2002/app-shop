@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, TextInput, StyleSheet, Image } from 'react-native'; // Kiểm tra import này
-
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Thay đổi nếu bạn sử dụng thư viện icon khác
+import { CART_SCREEN, HOME_SCREEN, PRODUCT_SCREEN } from '../../contants/routers';
+import { TouchableOpacity } from 'react-native';
 
 const FormHeader = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       {/* Phần trên cùng với thanh tìm kiếm */}
@@ -16,13 +19,15 @@ const FormHeader = () => {
 
       {/* Phần dưới với các icon */}
       <View style={styles.bottomSection}>
-        <Icon name="home-outline" size={30} style={styles.icon} />
+        <Icon name="home-outline" size={30} style={styles.icon} onPress={() => navigation.navigate(HOME_SCREEN)} />
         {/* Thay thế icon bằng hình ảnh */}
-        <Image 
-          source={require('../../../assets/image/shoe-icon.png')}
-          style={styles.imageIcon}
-        />
-        <Icon name="cart-outline" size={30} style={styles.icon} />
+        <TouchableOpacity onPress={() => navigation.navigate(PRODUCT_SCREEN)}>
+          <Image
+            source={require('../../../assets/image/shoe-icon.png')}
+            style={styles.imageIcon}
+          />
+        </TouchableOpacity>
+        <Icon name="cart-outline" size={30} style={styles.icon} onPress={() => navigation.navigate(CART_SCREEN)} />
       </View>
     </View>
   );
