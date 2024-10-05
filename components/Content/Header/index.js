@@ -29,8 +29,6 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#f9f9f9',
     width: "100%",
@@ -40,14 +38,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#f8bcbf',
-    width: '100%',
     padding: 10,
   },
   searchBar: {
     flex: 1,
     backgroundColor: '#dcdcdc',
     borderRadius: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
+    marginRight: 20,
     height: 40,
   },
   searchInput: {
