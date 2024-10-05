@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import Content from './components/Content/Router';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Ngon rồi</Text>
-      <StatusBar style="auto" />
+      <Content/>
     </View>
   );
 }
