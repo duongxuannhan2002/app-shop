@@ -1,5 +1,5 @@
 
-import { HOME_SCREEN, PRODUCT_SCREEN, CART_SCREEN, USERS_INFO, ORDER_HISTORY, ORDER_DETAILS } from "../contants/routers"
+import { HOME_SCREEN, PRODUCT_SCREEN, CART_SCREEN, USERS_INFO, ORDER_HISTORY, ORDER_DETAILS, } from "../contants/routers"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text, StyleSheet } from "react-native";
@@ -10,6 +10,7 @@ import HomeScreen from "./HomeScreen/HomeScreen";
 import UserInfoScreen from "./users_info/user_info";
 import OrderHistoryScreen from "./users_info/OrderHistoryScreen/OrderHistoryScreen";
 import OrderDetailScreen from "./users_info/OrderHistoryScreen/OrderDetailScreen/OrderDetailScreen";
+
 
 
 const Stack = createNativeStackNavigator();
