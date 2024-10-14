@@ -58,7 +58,7 @@ export default function HomeScreen() {
             <Text style={styles.productPrice}>{item.price}</Text>
         </View>
     );
-    console.log("Home ne");
+    // console.log("Home ne");
 
     return (
         <View style={styles.container}>

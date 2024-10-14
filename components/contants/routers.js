@@ -6,3 +6,6 @@ export const SIGNUP_NAME = "signup";
 export const SIGNIN_NAME = "signin";
 export const PRODUCT_SCREEN = "products";
 export const CART_SCREEN = "cart";
+export const USERS_INFO = "userinfo";
+export const ORDER_HISTORY = "OrderHistory";
+export const ORDER_DETAILS = "OderDetails";

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,57 +8,80 @@ import {
   TextInput,
   Modal,
   Button,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
-
-const productData = [
-  { id: '1', name: 'Shoe 1', brand: 'Nike', price: 100, image: require('../../../assets/image/s1.jpeg') },
-  { id: '2', name: 'Shoe 2', brand: 'Adidas', price: 150, image: require('../../../assets/image/s1.jpeg') },
-  { id: '3', name: 'Shoe 3', brand: 'Puma', price: 200, image: require('../../../assets/image/s1.jpeg') },
-  { id: '4', name: 'Shoe 4', brand: 'Nike', price: 250, image: require('../../../assets/image/s1.jpeg') },
-  // Thêm các sản phẩm khác
-];
+import axios from 'axios';
+import RNPickerSelect from 'react-native-picker-select'; // Nhập RNPickerSelect
+import styles from './style';
 
 export default function ProductScreen() {
-  const [products, setProducts] = useState(productData);
+  const [products, setProducts] = useState([]);
   const [searchModalVisible, setSearchModalVisible] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
+  const [noProductsFound, setNoProductsFound] = useState(false); // Thêm trạng thái
+
+  const handleGetProducts = async () => {
+    try {
+      const response = await axios.get('https://ttcs-delta.vercel.app/api/v1/get-shoes');
+      if (response.data && response.data.data) {
+        setProducts(response.data.data);
+        setNoProductsFound(false); // Đặt lại trạng thái khi tải lại sản phẩm
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetProducts();
+  }, []);
 
   const applyFilters = () => {
-    const filteredProducts = productData.filter((product) => {
+    const filteredProducts = products.filter((product) => {
       const withinPriceRange =
         (!minPrice || product.price >= Number(minPrice)) &&
         (!maxPrice || product.price <= Number(maxPrice));
 
-      const matchesBrand = selectedBrand ? product.brand === selectedBrand : true;
+      const matchesBrand =
+        selectedBrand
+          ? product.brand.toLowerCase() === selectedBrand.toLowerCase()
+          : true;
 
       return withinPriceRange && matchesBrand;
     });
 
+    if (filteredProducts.length === 0) {
+      setNoProductsFound(true); // Cập nhật trạng thái nếu không tìm thấy sản phẩm
+    } else {
+      setNoProductsFound(false);
+    }
+
     setProducts(filteredProducts);
-    setSearchModalVisible(false); // Đóng modal sau khi lọc
+    setSearchModalVisible(false);
   };
 
   const resetFilters = () => {
-    setProducts(productData); // Khôi phục tất cả sản phẩm
-    setSelectedBrand('');
+    setSearchModalVisible(false);
     setMinPrice('');
     setMaxPrice('');
+    setSelectedBrand('');
+    handleGetProducts();
   };
 
   const renderProduct = ({ item }) => (
     <View style={styles.productContainer}>
-      <Image source={item.image} style={styles.productImage} />
+      <Image source={{ uri: item.image }} style={styles.productImage} />
       <Text style={styles.productName}>{item.name}</Text>
-      <Text style={styles.productPrice}>${item.price}</Text>
+      <Text style={styles.productPrice}>
+        Giá: {item.price.toLocaleString()} VNĐ
+      </Text>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      {/* Nút tìm kiếm nâng cao */}
       <TouchableOpacity
         style={styles.advancedSearchButton}
         onPress={() => setSearchModalVisible(true)}
@@ -66,27 +89,42 @@ export default function ProductScreen() {
         <Text style={styles.advancedSearchButtonText}>Tìm kiếm nâng cao</Text>
       </TouchableOpacity>
 
-      {/* Lưới sản phẩm */}
-      <FlatList
-        data={products}
-        renderItem={renderProduct}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        contentContainerStyle={styles.productGrid}
-      />
+      {noProductsFound ? ( // Hiển thị thông báo nếu không tìm thấy sản phẩm
+        <View>
+          <Text style={styles.noProductsText}>Không tìm thấy sản phẩm</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={products}
+          renderItem={renderProduct}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          contentContainerStyle={styles.productGrid}
+        />
+      )}
 
-      {/* Modal tìm kiếm nâng cao */}
       <Modal visible={searchModalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Tìm kiếm nâng cao</Text>
 
-            {/* Chọn hãng */}
-            <TextInput
-              placeholder="Chọn hãng (Nike, Adidas, Puma)"
-              style={styles.input}
-              value={selectedBrand}
-              onChangeText={setSelectedBrand}
+            {/* Dropdown chọn hãng */}
+            <RNPickerSelect
+              onValueChange={(value) => setSelectedBrand(value)}
+              items={[
+                { label: 'Nike', value: 'nike' },
+                { label: 'Adidas', value: 'adidas' },
+                { label: 'Puma', value: 'puma' },
+              ]}
+              placeholder={{
+                label: 'Chọn hãng...',
+                value: null,
+                color: '#9EA0A4',
+              }}
+              style={{
+                inputIOS: styles.input,
+                inputAndroid: styles.input,
+              }}
             />
 
             {/* Chọn tầm giá */}
@@ -117,74 +155,3 @@ export default function ProductScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#f5f5f5',
-  },
-  advancedSearchButton: {
-    backgroundColor: '#007BFF',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  advancedSearchButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  productGrid: {
-    justifyContent: 'space-between',
-  },
-  productContainer: {
-    flex: 1,
-    margin: 5,
-    backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 10,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  productImage: {
-    width: 100,
-    height: 100,
-  },
-  productName: {
-    fontSize: 16,
-    marginVertical: 5,
-  },
-  productPrice: {
-    fontSize: 14,
-    color: 'green',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContent: {
-    backgroundColor: '#fff',
-    marginHorizontal: 20,
-    padding: 20,
-    borderRadius: 10,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  input: {
-    height: 40,
-    borderColor: '#ddd',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  buttonGroup: {
-    marginTop: 10,
-  },
-});

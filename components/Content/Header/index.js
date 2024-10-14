@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TextInput, StyleSheet, Image } from 'react-native'; // Kiểm tra import này
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Thay đổi nếu bạn sử dụng thư viện icon khác
-import { CART_SCREEN, HOME_SCREEN, PRODUCT_SCREEN } from '../../contants/routers';
+import { CART_SCREEN, HOME_SCREEN, PRODUCT_SCREEN, USERS_INFO } from '../../contants/routers';
 import { TouchableOpacity } from 'react-native';
 
 const FormHeader = () => {
@@ -14,7 +14,7 @@ const FormHeader = () => {
         <View style={styles.searchBar}>
           <TextInput placeholder="Search" style={styles.searchInput} />
         </View>
-        <Icon name="person-outline" size={30} style={styles.profileIcon} />
+        <Icon name="person-outline" size={30} style={styles.profileIcon} onPress = {() => navigation.navigate(USERS_INFO)}/>
       </View>
 
       {/* Phần dưới với các icon */}

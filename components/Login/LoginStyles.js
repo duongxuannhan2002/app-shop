@@ -23,6 +23,7 @@ styles = StyleSheet.create({
   input: {
     height: 50,
     borderColor: 'gray',
+    color: '#fff',
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
@@ -33,6 +34,28 @@ styles = StyleSheet.create({
     color: '#fff',
     paddingTop: 5,
     textDecorationLine: 'underline'
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 5,
+    marginBottom: 15,
+  },
+  passwordInput: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    color: '#fff',
+  },
+  eyeButton: {
+    padding: 10,
+  },
+  eyeText: {
+    fontSize: 24,
   },
 });
 

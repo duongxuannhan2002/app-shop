@@ -17,6 +17,7 @@ function Router() {
         <Stack.Screen name="SIGNIN_PATH" component={LoginForm}  />
         <Stack.Screen name="SIGNUP_PATH" component={SignupPage} />
         <Stack.Screen name="CONTENT" component={Content} />
+        
       </Stack.Navigator>
    
   );

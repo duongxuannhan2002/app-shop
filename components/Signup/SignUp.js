@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
-
+import { View, Text, TextInput, TouchableOpacity, ImageBackground, Alert } from 'react-native';
+import axios from 'axios'; // Nhập Axios
 import styles from './SignUpStyles';
 
 const backgroundImage = require('../../assets/image/signup.jpg');
@@ -8,15 +8,37 @@ const backgroundImage = require('../../assets/image/signup.jpg');
 const SignupPage = ({ navigation }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState(''); // Thêm state cho phoneNumber
     const [password, setPassword] = useState('');
 
-    const handleSignup = () => {
-        // Logic xử lý đăng ký (gửi dữ liệu lên server)
-        console.log('Name:', name);
-        console.log('Email:', email);
-        console.log('Password:', password);
-        // Thực hiện điều hướng hoặc thông báo đăng ký thành công
-        navigation.navigate('SIGNIN_PATH')
+    const handleSignup = async () => {
+        try {
+            // Gọi API để đăng ký người dùng
+            const response = await axios.post('https://ttcs-delta.vercel.app/api/v1/post-user', {
+                name,
+                email,
+                phoneNumber,
+                pass: password, // Đổi tên thuộc tính password thành pass
+            });
+
+            // Kiểm tra phản hồi từ API
+            if (response.status === 200) {
+                Alert.alert('Đăng ký thành công!');
+                // Điều hướng đến trang đăng nhập
+                navigation.navigate('SIGNIN_PATH');
+            } else {
+                Alert.alert('Đăng ký không thành công. Vui lòng kiểm tra lại thông tin.');
+            }
+        } catch (error) {
+            console.error(error);
+            if (error.response) {
+                // Xử lý lỗi khi có phản hồi từ server
+                Alert.alert(error.response.data.message || 'Có lỗi xảy ra, vui lòng thử lại!');
+            } else {
+                // Xử lý lỗi khi không có phản hồi từ server
+                Alert.alert('Có lỗi xảy ra, vui lòng kiểm tra kết nối internet!');
+            }
+        }
     };
 
     return (
@@ -26,14 +48,22 @@ const SignupPage = ({ navigation }) => {
 
                 <TextInput
                     style={styles.input}
-                    placeholder="UserName"
+                    placeholder="Tên người dùng"
                     value={name}
                     onChangeText={setName}
                 />
 
                 <TextInput
                     style={styles.input}
-                    placeholder="Password"
+                    placeholder="Số điện thoại"
+                    value={phoneNumber}
+                    onChangeText={setPhoneNumber}
+                    keyboardType="phone-pad"
+                />
+
+                <TextInput
+                    style={styles.input}
+                    placeholder="Mật khẩu"
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry={true}
@@ -48,7 +78,7 @@ const SignupPage = ({ navigation }) => {
                 />
 
                 <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
-                    <Text style={styles.signupButtonText}>Sign Up</Text>
+                    <Text style={styles.signupButtonText}>Đăng Ký</Text>
                 </TouchableOpacity>
 
             </View>
