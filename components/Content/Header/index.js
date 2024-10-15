@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, TextInput, StyleSheet, Image } from 'react-native';
+import { View, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Thay đổi nếu bạn sử dụng thư viện icon khác
+import { useNavigation } from '@react-navigation/native';
 
-const App = () => {
+const Header = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       {/* Phần trên cùng với thanh tìm kiếm */}
@@ -10,18 +12,28 @@ const App = () => {
         <View style={styles.searchBar}>
           <TextInput placeholder="Search" style={styles.searchInput} />
         </View>
-        <Icon name="person-outline" size={30} style={styles.profileIcon} />
+        <Icon name="person-outline" size={30} style={styles.profileIcon} onPress = {() => navigation.navigate('userinfo')}/>
       </View>
 
       {/* Phần dưới với các icon */}
       <View style={styles.bottomSection}>
-        <Icon name="home-outline" size={30} style={styles.icon} />
-        {/* Thay thế icon bằng hình ảnh */}
-        <Image 
-          source={require('../../../assets/image/shoe-icon.png')}
-          style={styles.imageIcon}
-        />
-        <Icon name="cart-outline" size={30} style={styles.icon} />
+        {/* Icon Home */}
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Icon name="home-outline" size={30} style={styles.icon} />
+        </TouchableOpacity>
+
+        {/* Thay thế icon bằng hình ảnh (Profile) */}
+        <TouchableOpacity onPress={() => navigation.navigate('Product')}>
+          <Image
+            source={require('../../../assets/image/shoe-icon.png')}
+            style={styles.imageIcon}
+          />
+        </TouchableOpacity>
+
+        {/* Icon Cart */}
+        <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+          <Icon name="cart-outline" size={30} style={styles.icon} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -72,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Header;

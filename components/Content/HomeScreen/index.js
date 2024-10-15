@@ -1,8 +1,21 @@
-import { Text, View, Image, StyleSheet, FlatList } from "react-native";
+import { Text, View, Image, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from 'react';
 import Header from "../Header";  // Đảm bảo Header đã được import đúng
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreen() {
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetch('https://ttcs-delta.vercel.app/api/v1/get-shoes') // Gọi API
+          .then((response) => response.json()) // Chuyển đổi dữ liệu nhận được thành JSON
+          .then((json) => {
+            setData(getRandomItems(json.data,6))
+             // Lưu dữ liệu vào state
+          })
+          .catch((error) => {
+            console.error(error); // Bắt lỗi nếu có
+          });
+      }, []);
     const images = [
         require('../../../assets/image/s1.jpeg'),
         require('../../../assets/image/s2.jpeg'),
@@ -11,27 +24,10 @@ export default function HomeScreen() {
     ];
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const data = [
-        {
-            id: '1',
-            name: 'Gợi ý hôm nay',
-            price: '100.000đ',
-            image: require('../../../assets/image/s1.jpeg'), // Thay đường dẫn tới ảnh của bạn
-        },
-        {
-            id: '2',
-            name: 'Gợi ý hôm nay',
-            price: '100.000đ',
-            image: require('../../../assets/image/s1.jpeg'), // Thay đường dẫn tới ảnh của bạn
-        },
-        {
-            id: '3',
-            name: 'Gợi ý hôm nay',
-            price: '100.000đ',
-            image: require('../../../assets/image/s1.jpeg'), // Thay đường dẫn tới ảnh của bạn
-        },
-        // Thêm các sản phẩm khác nếu cần
-    ];
+    const getRandomItems = (arr, count) => {
+        const shuffled = arr.sort(() => 0.5 - Math.random()); // Xáo trộn mảng
+        return shuffled.slice(0, count); // Lấy 4 phần tử đầu tiên
+    };
 
     // Mỗi 3 giây đổi hình một lần
     useEffect(() => {
@@ -45,12 +41,20 @@ export default function HomeScreen() {
         return () => clearInterval(intervalId);
     }, []);
 
+    const navigation = useNavigation();
+
+
     const renderItem = ({ item }) => (
-        <View style={styles.productContainer}>
-            <Image source={item.image} style={styles.productImage} />
-            <Text style={styles.productName}>{item.name}</Text>
-            <Text style={styles.productPrice}>{item.price}</Text>
-        </View>
+        <TouchableOpacity
+            style={styles.productContainer}
+            onPress={() => navigation.navigate('ProductDetails', { product: item.id })} // Điều hướng với thông tin sản phẩm
+        >
+            {/* <View > */}
+                <Image source={{ uri: item.image }} style={styles.productImage} />
+                <Text style={styles.productName}>{item.name}</Text>
+                <Text style={styles.productPrice}>{item.price + 'Đ'}</Text>
+            {/* </View> */}
+        </TouchableOpacity>
     );
 
     return (
