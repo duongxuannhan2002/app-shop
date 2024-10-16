@@ -19,28 +19,29 @@ styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     textAlign: 'center',
+    color:'#aaffff'
   },
   input: {
     height: 50,
     borderColor: 'gray',
-    color: '#fff',
+    color: '#aaffff',
     borderWidth: 1,
     marginBottom: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 10
   },
   textSignUp: {
     textAlign: 'right',
     fontSize: 16,
-    color: '#fff',
+    color: '#aaffff',
     paddingTop: 5,
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
   },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: 'gray',
     borderRadius: 5,
     padding: 5,
     marginBottom: 15,

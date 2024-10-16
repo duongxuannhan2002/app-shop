@@ -21,8 +21,10 @@ const CartScreen = () => {
                     const response = await axios.get(`https://ttcs-delta.vercel.app/api/v1/get-cart`, {
                         params: { token },
                     });
+                    let newid=0
                     const filteredProducts = response.data.data.map(product => ({
-                        id: product.id_product,
+                        id_sort: newid++,
+                        id:product.id_product,
                         name: product.name,
                         image: product.image,
                         price: product.price,
@@ -31,6 +33,8 @@ const CartScreen = () => {
                         size: product.size,
                     }));
                     setProductsData(filteredProducts);
+                    console.log(filteredProducts);
+                    
                 } else {
                     console.log('Token not found');
                 }
@@ -43,10 +47,10 @@ const CartScreen = () => {
     }, [isCall]);
 
     const toggleProduct = (product) => {
-        if (selectedProducts.includes(product.id)) {
-            setSelectedProducts(selectedProducts.filter(id => id !== product.id));
+        if (selectedProducts.includes(product.id_sort)) {
+            setSelectedProducts(selectedProducts.filter(id => id !== product.id_sort));
         } else {
-            setSelectedProducts([...selectedProducts, product.id]);
+            setSelectedProducts([...selectedProducts, product.id_sort]);
         }
     };
 
@@ -100,13 +104,13 @@ const CartScreen = () => {
     };
 
     const totalAmount = selectedProducts.reduce((total, selectedId) => {
-        const product = productsData.find(item => item.id === selectedId);
+        const product = productsData.find(item => item.id_sort === selectedId);
         return total + product.price * (product ? product.quantity : 0);
     }, 0);
 
     const onCheckout = () => {
         const order = selectedProducts.map(selectedId => {
-            const product = productsData.find(item => item.id === selectedId);
+            const product = productsData.find(item => item.id_sort === selectedId);
             return {
                 detail: product,
                 size: product.size,
@@ -117,7 +121,7 @@ const CartScreen = () => {
     };
 
     const renderProduct = ({ item }) => {
-        const isSelected = selectedProducts.includes(item.id);
+        const isSelected = selectedProducts.includes(item.id_sort);
         return (
             <View style={styles.productContainer}>
                 <View style={styles.checkboxContainer}>
@@ -169,7 +173,7 @@ const CartScreen = () => {
                 <FlatList
                     data={productsData}
                     renderItem={renderProduct}
-                    keyExtractor={(item) => (item.id).toString()}
+                    keyExtractor={(item) => (item.id_sort).toString()}
                 />
                 <View style={styles.footer}>
                     <Text style={styles.totalText}>Tổng cộng: {totalAmount.toLocaleString()}đ</Text>

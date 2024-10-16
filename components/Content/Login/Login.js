@@ -52,6 +52,7 @@ const LoginForm = () => {
         <TextInput
           style={styles.input}
           placeholder="Số điện thoại"
+          placeholderTextColor='#aaffff'
           value={phoneNumber}
           onChangeText={setPhoneNumber}
         />
@@ -59,6 +60,7 @@ const LoginForm = () => {
           <TextInput
             style={styles.passwordInput}
             placeholder="Mật khẩu"
+            placeholderTextColor='#aaffff'
             secureTextEntry={secureTextEntry} // Sử dụng trạng thái secureTextEntry
             value={pass}
             onChangeText={setPassword}

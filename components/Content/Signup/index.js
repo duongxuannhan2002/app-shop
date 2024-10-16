@@ -51,6 +51,7 @@ const SignupPage = () => {
                 <TextInput
                     style={styles.input}
                     placeholder="Tên người dùng"
+                    placeholderTextColor='#aaffff'
                     value={name}
                     onChangeText={setName}
                 />
@@ -58,25 +59,27 @@ const SignupPage = () => {
                 <TextInput
                     style={styles.input}
                     placeholder="Số điện thoại"
+                    placeholderTextColor='#aaffff'
                     value={phoneNumber}
                     onChangeText={setPhoneNumber}
                     keyboardType="phone-pad"
                 />
-
                 <TextInput
                     style={styles.input}
-                    placeholder="Mật khẩu"
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry={true}
+                    placeholder="Email"
+                    placeholderTextColor='#aaffff'
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
                 />
 
                 <TextInput
                     style={styles.input}
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
+                    placeholderTextColor='#aaffff'
+                    placeholder="Mật khẩu"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry={true}
                 />
 
                 <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
