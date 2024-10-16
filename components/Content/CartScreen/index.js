@@ -55,6 +55,9 @@ const CartScreen = () => {
     };
 
     const removeProduct = async (item) => {
+        if (selectedProducts.includes(item.id_sort)) {
+            setSelectedProducts(selectedProducts.filter(id => id !== item.id_sort));
+        }
         let iduser = await AsyncStorage.getItem('userId');
         // console.log(iduser);
         // try {
@@ -82,7 +85,7 @@ const CartScreen = () => {
             setIsCall(true)
             const response = await axios.delete('https://ttcs-delta.vercel.app/api/v1/delete-product-in-cart', {
                 data: {
-                    id_user: iduser, 
+                    id_user: iduser,
                     id_product: item.id,
                     size: item.size,
                 },
